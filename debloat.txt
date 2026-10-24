@@ -1,0 +1,106 @@
+# Debloat list for the Amazon Fire TV Stick AFTSS (codename sheldon, sold as Fire TV Stick Lite 2020)
+# on Fire OS 7.7.1.7 (PS7717/5741), Android 9 / SDK 28.
+#
+# Format: one package name per line. Everything after a "#" is a comment.
+# debloat.sh runs `pm disable-user --user 0 <pkg>` for each line (disabled, never uninstalled);
+# restore.sh runs `pm enable --user 0 <pkg>`. Comment out any line you want to keep.
+#
+# Sections 1 to 4 are derived from the cleanyourtv list
+# examples/amazon-fire-tv-stick-lite-2020/debloat.txt at https://github.com/Gathin23/cleanyourtv
+# Copyright (c) 2026 Gathin, MIT License (full notice in LICENSE).
+# Section 5 (extras) and section 6 (optional) were added for this repo and tested on the same stick.
+#
+# Kept on purpose (not in this list): com.amazon.tv.launcher, com.amazon.tv.settings.*, com.amazon.venezia
+# (Appstore), com.amazon.tv.ime (keyboard), remote/Bluetooth services, OTA updates, Alexa voice search
+# (com.amazon.vizzini, aria, cardinal, ivona TTS, tcomm), Prime Video (com.amazon.firebat, com.amazon.tv.support),
+# casting (cast.sink, dialservice, awvflingreceiver, whisperplay, whisperlink), profiles
+# (com.amazon.prism.android.service), com.amazon.tv.oobe (needed for a factory reset), screensaver,
+# accessibility (com.amazon.logan).
+#
+# Protected on this build. Fire OS refuses both `pm disable-user` and `pm suspend` for these, so they are
+# listed only as comments. privacy-dns.sh blocks what they phone home to instead:
+#   com.amazon.minerva.client.api, com.amazon.device.logmanager, com.amazon.device.crashmanager,
+#   com.amazon.diode, com.fireos.usagestats.proxy, com.amazon.ftvads.deeplinking, com.amazon.tv.csapp,
+#   com.amazon.tv.launcher
+
+# 1. Amazon telemetry, metrics, logs, usage reporting
+com.amazon.client.metrics.api
+# com.amazon.minerva.client.api            # protected by Fire OS
+com.amazon.neo.minerva
+com.amazon.neo.minerva.logcat
+com.amazon.tv.fw.metrics
+com.amazon.wirelessmetrics.service
+com.amazon.perfcollection
+com.amazon.perfc
+# com.amazon.device.logmanager             # protected by Fire OS
+# com.amazon.device.crashmanager           # protected by Fire OS
+com.amazon.dp.logger
+# com.amazon.diode                         # protected by Fire OS
+com.amazon.ceviche                         # data collection pipelines
+com.amazon.tv.developer.dataservice        # content personalization data for third-party apps
+# com.fireos.usagestats.proxy              # protected by Fire OS
+com.amazon.livedeviceservice
+com.amazon.privacypassservice              # privacy pass token service
+com.amazon.wifilocker                      # uploads Wi-Fi passwords to Amazon
+com.amazon.tv.acr                          # Automatic Content Recognition
+
+# 2. Ads, sponsored rows, recommendations, promos, shopping
+com.amazon.kso.blackbird                   # launcher ad sync / bidding
+com.amazon.sneakpeek                       # sponsored "Sneak Peek" previews
+com.amazon.hybridadidservice               # advertising ID service
+com.amazon.media.recommendations
+com.amazon.providers.contentsupport
+com.amazon.tv.easyupgrade                  # "upgrade your Fire TV" promos
+com.amazon.shoptv.client                   # Amazon Shopping on TV
+com.amazon.shoptv.firetv.client
+com.amazon.hedwig                          # Fire TV Channels
+com.amazon.tv.livetv                       # Live tab and guide (no tuner on a stick); may need a second attempt
+com.amazon.franktvinput                    # live TV input feeding the Live tab
+com.amazon.gamehub                         # games hub / Luna cards
+com.amazon.systemnotices
+com.amazon.tv.releasenotes                 # "what's new" release notes
+com.amazon.uxnotification                  # UX notification popups
+
+# 3. Preloaded Amazon apps and setup helpers
+com.amazon.cloud9                          # Silk browser
+com.amazon.tv.website_launcher             # opens websites in Silk
+com.amazon.tmm.tutorial                    # remote tutorial
+com.amazon.storm.lightning.tutorial        # remote app tutorial
+com.amazon.naatyam
+com.amazon.whisperjoin.middleware.np       # frustration-free setup of other Amazon devices
+com.amazon.tv.ffsprovisioneeclient
+com.amazon.ods.kindleconnect               # "show on Fire TV" from Echo / Fire tablet
+com.amazon.tv.mattercohost                 # Matter smart-home controller
+
+# 4. Alexa extras (voice search on the remote mic keeps working with all of these off)
+com.amazon.tv.alexaalerts                  # alarms, timers, reminders
+com.amazon.tv.alexanotifications
+com.amazon.alexa.externalmediaplayer.fireos   # Alexa music playback
+com.amazon.alexamediaplayer.runtime.ftv
+com.amazon.aiondec                         # Alexa skill connections
+com.amazon.audiohome                       # Alexa Home Theater
+com.amazon.whad                            # whole-home audio (multi-room music)
+com.amazon.whasettings
+com.amazon.wha.mediabrowserservice
+com.amazon.aca                             # Alexa hints/cues providers (HintsProvider, InstaHintsProvider), ~44 MB resident
+
+# 5. Extras added for this repo (all disabled successfully on AFTSS / PS7717)
+com.amazon.dummy.alarmclock                # placeholder stub
+com.amazon.dummy.calendar                  # placeholder stub
+com.amazon.dummy.contacts                  # placeholder stub
+com.amazon.dummy.gallery                   # placeholder stub
+com.amazon.dummy.music                     # placeholder stub
+com.amazon.dummy.settings                  # placeholder stub
+com.amazon.minitv.android.app              # Amazon miniTV
+com.amazon.stillwatching.activity          # "Are you still watching?" prompt
+com.amazon.spotify.mediabrowserservice     # Alexa-to-Spotify bridge; the Spotify app itself still works
+com.amazon.tv.matter                       # Matter smart-home
+com.amazon.tv.notificationcenter           # notification center
+com.amazon.tv.legal.notices                # legal notices screen
+com.amazon.tv.legalresources               # legal resources screen
+com.amazon.firetv.troubleshooting          # troubleshooting helper
+
+# 6. Optional, your choice. Commented out (kept) by default. Remove the "# " to disable one.
+# com.amazon.tahoe                         # Amazon Kids (FreeTime)
+# com.amazon.bueller.music                 # Amazon Music
+# com.amazon.bueller.photos                # Amazon Photos
